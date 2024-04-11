@@ -1,7 +1,7 @@
 ﻿
 using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
-using aspnetcore.ntier.DAL.Entities;
+using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,27 +25,66 @@ namespace aspnetcore.ntier.API.Controllers
         }
 
         [HttpGet("gettasks")]
-        /*        public async Task<IActionResult> GetTasks()
-                {
-                    try
-                    {
-                        _logger.LogInformation("Controller start");
-                        var result = await _taskService.GetTasksAsync();
-                        _logger.LogInformation("Incontroller result {Count}", result.ToArray()[0]);
-                        return Ok(result);
-                    }
-                    catch (Exception)
-                    {
-                        return BadRequest("Something went wrong");
-                    }
-                }*/
-
-        public async Task<List<Taskk>> GetTasks()
+        public async Task<IActionResult> GetTasks()
         {
-                _logger.LogInformation("Controller start");
+            try
+            {
                 var result = await _taskService.GetTasksAsync();
-                _logger.LogInformation("Incontroller result {Count}", result.ToArray()[0]);
-            return result;
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
         }
+
+        [HttpPost("addtask")]
+        public async Task<IActionResult> AddTask(TaskToAddDTO taskToAddDTO)
+        {
+            try
+            {
+                return Ok(await _taskService.AddTaskAsync(taskToAddDTO));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpPost("deletetask")]
+        public async Task<IActionResult> DeleteTask(int taskId)
+        {
+            try
+            {
+                await _taskService.DeleteTaskAsync(taskId);
+                return Ok();
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound("Task not found");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpPut("updatestatus")]
+        public async Task<IActionResult> UpdateStatusTask(int taskId)
+        {
+            try
+            {
+                return Ok(await _taskService.UpdateStatusTaskAsync(taskId));
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound("Task not found");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
     }
 }

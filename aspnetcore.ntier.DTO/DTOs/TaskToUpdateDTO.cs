@@ -2,7 +2,7 @@
 
 namespace aspnetcore.ntier.DTO.DTOs;
 
-public class TaskDTO
+public class TaskToUpdateDTO
 {
     [Key]
     public int TaskId { get; set; }
