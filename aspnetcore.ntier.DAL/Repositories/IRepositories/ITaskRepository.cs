@@ -15,5 +15,7 @@ namespace aspnetcore.ntier.DAL.Repositories.IRepositories
 
         Task<Taskk> UpdateStatusTaskAsync(Taskk task);
 
+        Task<Taskk> UpdateTaskAsync(Taskk task);
+
     }
 }

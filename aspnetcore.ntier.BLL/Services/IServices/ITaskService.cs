@@ -13,4 +13,6 @@ public interface ITaskService
     Task DeleteTaskAsync(int taskId);
 
     Task<TaskDTO> UpdateStatusTaskAsync(int taskId);
+
+    Task<TaskDTO> UpdateTaskAsync(TaskDTO taskToUpdate);
 }

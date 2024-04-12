@@ -45,6 +45,15 @@ namespace aspnetcore.ntier.DAL.Repositories
             await _aspNetCoreNTierDbContext.SaveChangesAsync();
             return task;
         }
+
+        public async Task<Taskk> UpdateTaskAsync(Taskk task)
+        {
+            _ = _aspNetCoreNTierDbContext.Update(task);
+
+            await _aspNetCoreNTierDbContext.SaveChangesAsync();
+            return task;
+        }
+
     }
 }
 

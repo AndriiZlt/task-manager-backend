@@ -72,6 +72,27 @@ namespace aspnetcore.ntier.BLL.Services
             return _mapper.Map<TaskDTO>(await _taskRepository.UpdateStatusTaskAsync(taskToUpdate));
         }
 
+        public async Task<TaskDTO> UpdateTaskAsync(TaskDTO taskToUpdate)
+        {
+            var taskBeforeUpdate = await _taskRepository.GetAsync(x => x.TaskId == taskToUpdate.TaskId);
+
+            if (taskBeforeUpdate is null)
+            {
+                _logger.LogError("Task with taskId = {TaskId} was not found", taskToUpdate.TaskId);
+                throw new KeyNotFoundException();
+            }
+
+            taskBeforeUpdate.Title = taskToUpdate.Title;
+            taskBeforeUpdate.Description = taskToUpdate.Description;
+            taskBeforeUpdate.Status = taskToUpdate.Status;
+
+            var taskAfterUpdate = _mapper.Map<Taskk>(taskBeforeUpdate);
+
+            _logger.LogInformation("Task with these properties: {@TaskToUpdate} has been updated", taskAfterUpdate);
+
+            return _mapper.Map<TaskDTO>(await _taskRepository.UpdateTaskAsync(taskAfterUpdate));
+        }
+
     }
 }
 

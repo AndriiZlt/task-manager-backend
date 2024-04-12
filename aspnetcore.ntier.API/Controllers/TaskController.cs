@@ -51,15 +51,15 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
-        [HttpPost("deletetask")]
-        public async Task<IActionResult> DeleteTask(int taskId)
+
+        [HttpPut("updatestatus")]
+        public async Task<IActionResult> UpdateStatusTask(int taskId)
         {
             try
             {
-                await _taskService.DeleteTaskAsync(taskId);
-                return Ok();
+                return Ok(await _taskService.UpdateStatusTaskAsync(taskId));
             }
-            catch (UserNotFoundException)
+            catch (KeyNotFoundException)
             {
                 return NotFound("Task not found");
             }
@@ -69,14 +69,32 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
-        [HttpPut("updatestatus")]
-        public async Task<IActionResult> UpdateStatusTask(int taskId)
+        [HttpPut("updatetask")]
+        public async Task<IActionResult> UpdateTask(TaskDTO taskToUpdate)
         {
             try
             {
-                return Ok(await _taskService.UpdateStatusTaskAsync(taskId));
+                return Ok(await _taskService.UpdateTaskAsync(taskToUpdate));
             }
-            catch (UserNotFoundException)
+            catch (KeyNotFoundException)
+            {
+                return NotFound("Task not found");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpDelete("deletetask")]
+        public async Task<IActionResult> DeleteTask(int taskId)
+        {
+            try
+            {
+                await _taskService.DeleteTaskAsync(taskId);
+                return Ok();
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound("Task not found");
             }
