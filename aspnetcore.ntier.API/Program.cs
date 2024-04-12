@@ -1,5 +1,9 @@
 using aspnetcore.ntier.BLL;
+using aspnetcore.ntier.BLL.Services;
+using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.DAL;
+using aspnetcore.ntier.DAL.Repositories;
+using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.IdentityModel.Tokens;
@@ -26,6 +30,8 @@ builder.Services.AddCors(options =>
 //CORS-----------------------------
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -53,7 +59,7 @@ var app = builder.Build();
 app.UseCors(builder =>
         builder
         .WithOrigins("http://localhost:4200")
-        .AllowAnyMethod()
+        .AllowAnyMethod() 
         .AllowAnyHeader());
 
 app.UseSerilogRequestLogging();

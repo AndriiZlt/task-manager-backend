@@ -4,26 +4,61 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using aspnetcore.ntier.DAL.DataContext;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
 namespace aspnetcore.ntier.DAL.Migrations
 {
     [DbContext(typeof(AspNetCoreNTierDbContext))]
-    [Migration("20230122173117_UpdatedUserTable")]
-    partial class UpdatedUserTable
+    [Migration("20240409094001_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
 
-            modelBuilder.Entity("aspnetcore.ntier.Entity.Entities.User", b =>
+            modelBuilder.Entity("aspnetcore.ntier.DAL.Entities.Taskk", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("Tasks");
+
+                    b.HasData(
+                        new
+                        {
+                            TaskId = 1,
+                            Description = "Test task",
+                            Status = "undone",
+                            Title = "First task"
+                        });
+                });
+
+            modelBuilder.Entity("aspnetcore.ntier.DAL.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -32,12 +67,8 @@ namespace aspnetcore.ntier.DAL.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
-  
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -53,10 +84,10 @@ namespace aspnetcore.ntier.DAL.Migrations
                         new
                         {
                             UserId = 1,
+                            Email = "johndoe@gmail.com",
                             Name = "John",
                             Password = "123",
                             Surname = "Doe",
-                            Email = "johndoe@gmail.com",
                             Username = "johndoe"
                         });
                 });

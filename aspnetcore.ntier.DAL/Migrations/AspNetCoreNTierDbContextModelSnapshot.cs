@@ -16,11 +16,47 @@ namespace aspnetcore.ntier.DAL.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
 
-            modelBuilder.Entity("aspnetcore.ntier.Entity.Entities.User", b =>
+            modelBuilder.Entity("aspnetcore.ntier.DAL.Entities.Taskk", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("Tasks");
+
+                    b.HasData(
+                        new
+                        {
+                            TaskId = 1,
+                            Description = "Test task",
+                            Status = "undone",
+                            Title = "First task"
+                        });
+                });
+
+            modelBuilder.Entity("aspnetcore.ntier.DAL.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -29,11 +65,6 @@ namespace aspnetcore.ntier.DAL.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -51,9 +82,9 @@ namespace aspnetcore.ntier.DAL.Migrations
                         new
                         {
                             UserId = 1,
+                            Email = "johndoe@gmail.com",
                             Name = "John",
                             Password = "123",
-                            Email = "johndoe@gmail.com",
                             Surname = "Doe",
                             Username = "johndoe"
                         });
