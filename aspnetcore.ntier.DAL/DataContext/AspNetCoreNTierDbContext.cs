@@ -10,6 +10,7 @@ public class AspNetCoreNTierDbContext : DbContext
     public DbSet<User> Users { get; set; }
 
     public DbSet<Taskk> Tasks { get; set; }
+    public DbSet<Subtask> Subtasks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,14 +26,10 @@ public class AspNetCoreNTierDbContext : DbContext
              }
          );
 
-        modelBuilder.Entity<Taskk>().HasData(
-            new Taskk
-            {
-                TaskId = 1,
-                Title = "First task",
-                Description = "Test task",
-                Status = "undone"
-            }
-         );
+        modelBuilder.Entity<Subtask>()
+            .HasOne(s => s.Task)
+            .WithMany(t => t.Subtasks)
+            .HasForeignKey(t => t.TaskId)
+            .IsRequired();
     }
 }

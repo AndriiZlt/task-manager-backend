@@ -1,9 +1,9 @@
 ﻿
 using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
-using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace aspnetcore.ntier.API.Controllers
 {
@@ -12,24 +12,24 @@ namespace aspnetcore.ntier.API.Controllers
     [ApiVersion("1")]
     [ApiController]
 
-    public class TaskController : ControllerBase
+    public class SubtaskController : ControllerBase
     {
 
-        private readonly ITaskService _taskService;
-        private readonly ILogger<TaskService> _logger;
+        private readonly ISubtaskService _subtaskService;
+        private readonly ILogger<SubtaskService> _logger;
 
-        public TaskController(ITaskService taskService, ILogger<TaskService> logger)
+        public SubtaskController(ISubtaskService subtaskService, ILogger<SubtaskService> logger)
         {
-            _taskService = taskService;
+            _subtaskService = subtaskService;
             _logger = logger;
         }
 
-        [HttpGet("gettasks")]
+        [HttpGet("getsubtasks")]
         public async Task<IActionResult> GetTasks()
         {
             try
             {
-                var result = await _taskService.GetTasksAsync();
+                var result = await _subtaskService.GetSubtasksAsync();
                 return Ok(result);
             }
             catch (Exception)
@@ -38,12 +38,13 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
-        [HttpPost("addtask")]
-        public async Task<IActionResult> AddTask(TaskToAddDTO taskToAddDTO)
+        [HttpPost("addsubtask")]
+        public async Task<IActionResult> AddTask(SubtaskToAddDTO taskToAddDTO)
         {
             try
             {
-                return Ok(await _taskService.AddTaskAsync(taskToAddDTO));
+                _logger.LogInformation("Subtask with these properties: {@TaskToUpdate} ADDING...", taskToAddDTO);
+                return Ok(await _subtaskService.AddSubtaskAsync(taskToAddDTO));
             }
             catch (Exception)
             {
@@ -52,12 +53,12 @@ namespace aspnetcore.ntier.API.Controllers
         }
 
 
-        [HttpPut("updatestatus")]
+        [HttpPut("updatesubstatus")]
         public async Task<IActionResult> UpdateStatusTask(int taskId)
         {
             try
             {
-                return Ok(await _taskService.UpdateStatusTaskAsync(taskId));
+                return Ok(await _subtaskService.UpdateStatusSubtaskAsync(taskId));
             }
             catch (KeyNotFoundException)
             {
@@ -69,12 +70,12 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
-        [HttpPut("updatetask")]
-        public async Task<IActionResult> UpdateTask(TaskDTO taskToUpdate)
+        [HttpPut("updatesubtask")]
+        public async Task<IActionResult> UpdateTask(SubtaskDTO taskToUpdate)
         {
             try
             {
-                return Ok(await _taskService.UpdateTaskAsync(taskToUpdate));
+                return Ok(await _subtaskService.UpdateSubtaskAsync(taskToUpdate));
             }
             catch (KeyNotFoundException)
             {
@@ -86,12 +87,12 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
-        [HttpDelete("deletetask")]
+        [HttpDelete("deletesubtask")]
         public async Task<IActionResult> DeleteTask(int taskId)
         {
             try
             {
-                await _taskService.DeleteTaskAsync(taskId);
+                await _subtaskService.DeleteSubtaskAsync(taskId);
                 return Ok();
             }
             catch (KeyNotFoundException)

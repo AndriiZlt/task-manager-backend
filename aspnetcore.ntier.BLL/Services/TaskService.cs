@@ -35,13 +35,14 @@ namespace aspnetcore.ntier.BLL.Services
 
         public async Task<TaskDTO> AddTaskAsync(TaskToAddDTO taskToAddDTO)
         {
+            _logger.LogInformation("Due Date = {TaskId}", taskToAddDTO.DateDue);
             var addedTask = await _taskRepository.AddAsync(_mapper.Map<Taskk>(taskToAddDTO));
             return _mapper.Map<TaskDTO>(addedTask);
         }
 
         public async Task DeleteTaskAsync(int taskId)
         {
-            var taskToDelete = await _taskRepository.GetAsync(x => x.TaskId == taskId);
+            var taskToDelete = await _taskRepository.GetAsync(x => x.Id == taskId);
 
             if (taskToDelete is null)
             {
@@ -54,7 +55,7 @@ namespace aspnetcore.ntier.BLL.Services
 
         public async Task<TaskDTO> UpdateStatusTaskAsync(int taskId)
         {
-            var task = await _taskRepository.GetAsync(x => x.TaskId == taskId);
+            var task = await _taskRepository.GetAsync(x => x.Id == taskId);
             if (task is null)
             {
                 _logger.LogError("Task with taskId = {TaskId} was not found", taskId);
@@ -74,11 +75,11 @@ namespace aspnetcore.ntier.BLL.Services
 
         public async Task<TaskDTO> UpdateTaskAsync(TaskDTO taskToUpdate)
         {
-            var taskBeforeUpdate = await _taskRepository.GetAsync(x => x.TaskId == taskToUpdate.TaskId);
+            var taskBeforeUpdate = await _taskRepository.GetAsync(x => x.Id == taskToUpdate.Id);
 
             if (taskBeforeUpdate is null)
             {
-                _logger.LogError("Task with taskId = {TaskId} was not found", taskToUpdate.TaskId);
+                _logger.LogError("Task with taskId = {TaskId} was not found", taskToUpdate.Id);
                 throw new KeyNotFoundException();
             }
 
