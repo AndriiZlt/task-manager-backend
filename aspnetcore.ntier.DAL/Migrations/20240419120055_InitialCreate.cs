@@ -54,7 +54,6 @@ namespace aspnetcore.ntier.DAL.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateDue = table.Column<DateTime>(type: "TEXT", nullable: true),
                     DateCompleted = table.Column<DateTime>(type: "TEXT", nullable: true),
                     TaskId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
