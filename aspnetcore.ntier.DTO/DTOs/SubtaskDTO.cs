@@ -8,8 +8,8 @@ public class SubtaskDTO
     public string Title { get; set; }
     public string Description { get; set; }
     public string Status { get; set; }
-    public DateTime DateCreated { get; set; } 
-    public DateTime? DateCompleted { get; set; }
+    public string DateCreated { get; set; } 
+    public string? DateCompleted { get; set; }
     public int TaskId { get; set; }
 
 }

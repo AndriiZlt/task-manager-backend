@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -18,9 +17,9 @@ namespace aspnetcore.ntier.DAL.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateDue = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    DateCompleted = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    DateCreated = table.Column<string>(type: "TEXT", nullable: false),
+                    DateDue = table.Column<string>(type: "TEXT", nullable: true),
+                    DateCompleted = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,8 +52,8 @@ namespace aspnetcore.ntier.DAL.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateCompleted = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    DateCreated = table.Column<string>(type: "TEXT", nullable: false),
+                    DateCompleted = table.Column<string>(type: "TEXT", nullable: true),
                     TaskId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

@@ -3,7 +3,6 @@ using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace aspnetcore.ntier.API.Controllers
 {
@@ -53,7 +52,7 @@ namespace aspnetcore.ntier.API.Controllers
         }
 
 
-        [HttpPut("updatesubstatus")]
+        [HttpPut("updatestatus")]
         public async Task<IActionResult> UpdateStatusTask(int taskId)
         {
             try

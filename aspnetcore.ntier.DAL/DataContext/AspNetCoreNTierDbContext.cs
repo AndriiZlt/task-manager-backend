@@ -11,6 +11,7 @@ public class AspNetCoreNTierDbContext : DbContext
 
     public DbSet<Taskk> Tasks { get; set; }
     public DbSet<Subtask> Subtasks { get; set; }
+    public DbSet<Friend> Friends { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -18,7 +19,7 @@ public class AspNetCoreNTierDbContext : DbContext
              new User
              {
                  UserId = 1,
-                 Username = "johndoe",
+                 UserName = "johndoe",
                  Email = "johndoe@gmail.com",
                  Password = "123",
                  Name = "John",

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using aspnetcore.ntier.DAL.DataContext;
 
@@ -10,9 +11,10 @@ using aspnetcore.ntier.DAL.DataContext;
 namespace aspnetcore.ntier.DAL.Migrations
 {
     [DbContext(typeof(AspNetCoreNTierDbContext))]
-    partial class AspNetCoreNTierDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240422100558_Friends2")]
+    partial class Friends2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.29");
@@ -41,10 +43,6 @@ namespace aspnetcore.ntier.DAL.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Picture")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
