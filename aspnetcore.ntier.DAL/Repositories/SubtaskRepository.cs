@@ -15,28 +15,29 @@ namespace aspnetcore.ntier.DAL.Repositories
         {
             _aspNetCoreNTierDbContext = aspNetCoreNTierDbContext;
         }
-        /*public async Task<List<SubTask>> GetListAsync()
+        public async Task<List<Subtask>> GetListAsync()
         {
-            return await _aspNetCoreNTierDbContext.Set<SubTask>().ToListAsync();
+            return await _aspNetCoreNTierDbContext.Set<Subtask>().ToListAsync();
         }
 
-        public async Task<SubTask> GetAsync(Expression<Func<SubTask, bool>> filter = null, CancellationToken cancellationToken = default)
+        public async Task<Subtask> GetAsync(Expression<Func<Subtask, bool>> filter = null, CancellationToken cancellationToken = default)
         {
-            return await _aspNetCoreNTierDbContext.Set<SubTask>().AsNoTracking().FirstOrDefaultAsync(filter, cancellationToken);
+            return await _aspNetCoreNTierDbContext.Set<Subtask>().AsNoTracking().FirstOrDefaultAsync(filter, cancellationToken);
         }
 
-        public async Task<SubTask> AddAsync(SubTask task)
+        public async Task<Subtask> AddAsync(Subtask task)
         {
+
             await _aspNetCoreNTierDbContext.AddAsync(task);
             await _aspNetCoreNTierDbContext.SaveChangesAsync();
             return task;
         }
 
-        public async Task<int> DeleteAsync(SubTask task)
+        public async Task<int> DeleteAsync(Subtask task)
         {
             _ = _aspNetCoreNTierDbContext.Remove(task);
             return await _aspNetCoreNTierDbContext.SaveChangesAsync();
-        }*/
+        }
 
         public async Task<Subtask> UpdateStatusTaskAsync(Subtask task)
         {

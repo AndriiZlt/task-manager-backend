@@ -9,7 +9,7 @@ public class TaskDTO
     public string Description { get; set; }
     public string Status { get; set; }
     public string DateCreated { get; set; }
-    public DateTime? DateDue { get; set; }
-    public DateTime? DateCompleted { get; set; }
+    public string? DateDue { get; set; }
+    public string? DateCompleted { get; set; }
 
 }

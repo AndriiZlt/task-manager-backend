@@ -30,13 +30,13 @@ public class AuthService : IAuthService
     public async Task<UserToReturnDTO> LoginAsync(UserToLoginDTO userToLoginDTO)
     {
         var user = await _userRepository.GetAsync(
-            u => u.Username == userToLoginDTO.Username.ToLower() && u.Password == userToLoginDTO.Password);
+            u => u.UserName == userToLoginDTO.UserName.ToLower() && u.Password == userToLoginDTO.Password);
 
         if (user == null)
             throw new UserNotFoundException();
 
         var userToReturn = _mapper.Map<UserToReturnDTO>(user);
-        userToReturn.Token = GenerateToken(user.UserId, user.Username);
+        userToReturn.Token = GenerateToken(user.UserId, user.UserName);
 
         return userToReturn;
     }
@@ -45,12 +45,12 @@ public class AuthService : IAuthService
     {
 
 
-        userToRegisterDTO.Username = userToRegisterDTO.Username.ToLower();
+        userToRegisterDTO.UserName = userToRegisterDTO.UserName.ToLower();
 
         var addedUser = await _userRepository.AddAsync(_mapper.Map<User>(userToRegisterDTO));
 
         var userToReturn = _mapper.Map<UserToReturnDTO>(addedUser);
-        userToReturn.Token = GenerateToken(addedUser.UserId, addedUser.Username);
+        userToReturn.Token = GenerateToken(addedUser.UserId, addedUser.UserName);
 
         return userToReturn;
     }

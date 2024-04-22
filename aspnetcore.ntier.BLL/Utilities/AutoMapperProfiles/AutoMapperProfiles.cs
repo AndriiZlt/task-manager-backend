@@ -19,6 +19,8 @@ public static class AutoMapperProfiles
             CreateMap<Taskk, TaskToAddDTO>().ReverseMap();
             CreateMap<Subtask, SubtaskDTO>().ReverseMap();
             CreateMap<Subtask, SubtaskToAddDTO>().ReverseMap();
+            CreateMap<Friend, FriendDTO>().ReverseMap();
+            CreateMap<Friend, FriendToAddDTO>().ReverseMap();
         }
     }
 }

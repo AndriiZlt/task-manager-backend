@@ -14,25 +14,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
-
-//CORS-----------------------------
 builder.Services.AddCors(options =>
 {
-    // this defines a CORS policy called "default"
     options.AddPolicy(name: "_myAllowSpecificOrigins",
                           policy =>
                           {
                               policy.WithOrigins("http://localhost:4200");
                           });
 });
-//CORS-----------------------------
+
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ISubtaskService, SubtaskService>();
 builder.Services.AddScoped<ISubtaskRepository, SubtaskRepository>();
+builder.Services.AddScoped<IFriendService, FriendService>();
+builder.Services.AddScoped<IFriendRepository, FriendRepository>();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

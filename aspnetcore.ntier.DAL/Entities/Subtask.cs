@@ -1,6 +1,5 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace aspnetcore.ntier.DAL.Entities
 {
@@ -11,8 +10,8 @@ namespace aspnetcore.ntier.DAL.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public string Status { get; set; } 
-        public DateTime DateCreated {  get; set; } 
-        public DateTime? DateCompleted { get; set; }
+        public string DateCreated {  get; set; } 
+        public string? DateCompleted { get; set; }
         public int TaskId {  get; set; }
 
         public Taskk Task { get; set; }
@@ -20,7 +19,7 @@ namespace aspnetcore.ntier.DAL.Entities
         public Subtask()
         {
             Status = "undone";
-            DateCreated = DateTime.Now;
+            DateCreated = DateTime.UtcNow.ToString("yyyy-MM-ddThh:mm:ssZ");
         }
 
     }

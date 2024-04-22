@@ -45,7 +45,7 @@ public class UserService : IUserService
 
     public async Task<UserDTO> AddUserAsync(UserToAddDTO userToAddDTO)
     {
-        userToAddDTO.Username = userToAddDTO.Username.ToLower();
+        userToAddDTO.UserName = userToAddDTO.UserName.ToLower();
         var addedUser = await _userRepository.AddAsync(_mapper.Map<User>(userToAddDTO));
 
         return _mapper.Map<UserDTO>(addedUser);
@@ -53,7 +53,7 @@ public class UserService : IUserService
 
     public async Task<UserDTO> UpdateUserAsync(UserToUpdateDTO userToUpdateDTO)
     {
-        userToUpdateDTO.Username = userToUpdateDTO.Username.ToLower();
+        userToUpdateDTO.UserName = userToUpdateDTO.UserName.ToLower();
         var user = await _userRepository.GetAsync(x => x.UserId == userToUpdateDTO.UserId);
 
         if (user is null)
