@@ -83,6 +83,8 @@ namespace aspnetcore.ntier.BLL.Services
             taskBeforeUpdate.Title = taskToUpdate.Title;
             taskBeforeUpdate.Description = taskToUpdate.Description;
             taskBeforeUpdate.Status = taskToUpdate.Status;
+            taskBeforeUpdate.TaskId = taskToUpdate.TaskId;
+            taskBeforeUpdate.DateCompleted = taskToUpdate.DateCompleted;
 
             var taskAfterUpdate = _mapper.Map<Subtask>(taskBeforeUpdate);
 
