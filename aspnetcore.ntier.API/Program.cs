@@ -1,3 +1,4 @@
+using aspnetcore.ntier.API;
 using aspnetcore.ntier.BLL;
 using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
@@ -31,6 +32,7 @@ builder.Services.AddScoped<ISubtaskService, SubtaskService>();
 builder.Services.AddScoped<ISubtaskRepository, SubtaskRepository>();
 builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
+builder.Services.AddSignalR();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -81,6 +83,8 @@ app.UseSwaggerUI(c =>
         c.SwaggerEndpoint($"../swagger/{description.GroupName}/swagger.json", description.GroupName.ToString());
     }
 });
+
+app.MapHub<ChatHub>("chat-hub");
 
 app.Run();
 
