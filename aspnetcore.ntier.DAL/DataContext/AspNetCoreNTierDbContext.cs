@@ -1,9 +1,10 @@
 ﻿using aspnetcore.ntier.DAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace aspnetcore.ntier.DAL.DataContext;
 
-public class AspNetCoreNTierDbContext : DbContext
+public class AspNetCoreNTierDbContext :IdentityDbContext
 {
     public AspNetCoreNTierDbContext(DbContextOptions<AspNetCoreNTierDbContext> options) : base(options) { }
 
