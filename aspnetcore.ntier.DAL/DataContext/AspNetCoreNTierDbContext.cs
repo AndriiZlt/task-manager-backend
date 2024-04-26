@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace aspnetcore.ntier.DAL.DataContext;
 
-public class AspNetCoreNTierDbContext :IdentityDbContext
+public class AspNetCoreNTierDbContext :DbContext
 {
     public AspNetCoreNTierDbContext(DbContextOptions<AspNetCoreNTierDbContext> options) : base(options) { }
 
