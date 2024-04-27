@@ -19,7 +19,7 @@ namespace aspnetcore.ntier.API
         public async Task askServer(string name)
         {
 
-            _logger.LogInformation("In CHatHub:{name}", name);
+            _logger.LogInformation("Username in SignalR HUB:{name}", name);
             await Clients.All.SendAsync("askServerResponse", name);
         }
     }

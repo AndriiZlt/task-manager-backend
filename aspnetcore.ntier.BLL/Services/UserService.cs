@@ -32,7 +32,7 @@ public class UserService : IUserService
     public async Task<UserDTO> GetUserAsync(int userId, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("User with userId = {UserId} was requested", userId);
-        var userToReturn = await _userRepository.GetAsync(x => x.UserId == userId, cancellationToken);
+        var userToReturn = await _userRepository.GetAsync(x => x.Id == userId, cancellationToken);
 
         if (userToReturn is null)
         {
@@ -54,11 +54,11 @@ public class UserService : IUserService
     public async Task<UserDTO> UpdateUserAsync(UserToUpdateDTO userToUpdateDTO)
     {
         userToUpdateDTO.UserName = userToUpdateDTO.UserName.ToLower();
-        var user = await _userRepository.GetAsync(x => x.UserId == userToUpdateDTO.UserId);
+        var user = await _userRepository.GetAsync(x => x.Id == userToUpdateDTO.Id);
 
         if (user is null)
         {
-            _logger.LogError("User with userId = {UserId} was not found", userToUpdateDTO.UserId);
+            _logger.LogError("User with userId = {UserId} was not found", userToUpdateDTO.Id);
             throw new UserNotFoundException();
         }
 
@@ -71,7 +71,7 @@ public class UserService : IUserService
 
     public async Task DeleteUserAsync(int userId)
     {
-        var userToDelete = await _userRepository.GetAsync(x => x.UserId == userId);
+        var userToDelete = await _userRepository.GetAsync(x => x.Id == userId);
 
         if (userToDelete is null)
         {

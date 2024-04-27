@@ -1,10 +1,11 @@
 ﻿using aspnetcore.ntier.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace aspnetcore.ntier.DAL.DataContext;
 
-public class AspNetCoreNTierDbContext :DbContext
+public class AspNetCoreNTierDbContext :IdentityDbContext<IdentityUser>
 {
     public AspNetCoreNTierDbContext(DbContextOptions<AspNetCoreNTierDbContext> options) : base(options) { }
 
@@ -16,10 +17,12 @@ public class AspNetCoreNTierDbContext :DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<User>().HasData(
              new User
              {
-                 UserId = 1,
+                 Id = 1,
                  UserName = "johndoe",
                  Email = "johndoe@gmail.com",
                  Password = "123",
@@ -28,10 +31,21 @@ public class AspNetCoreNTierDbContext :DbContext
              }
          );
 
+        modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole() { Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
+            new IdentityRole() { Name = "User", ConcurrencyStamp = "2", NormalizedName = "User" }
+            );
+
         modelBuilder.Entity<Subtask>()
             .HasOne(s => s.Task)
             .WithMany(t => t.Subtasks)
             .HasForeignKey(t => t.TaskId)
+            .IsRequired();
+
+        modelBuilder.Entity<Taskk>()
+            .HasOne(t => t.User)
+            .WithMany(u => u.Tasks)
+            .HasForeignKey(t => t.UserId)
             .IsRequired();
     }
 }

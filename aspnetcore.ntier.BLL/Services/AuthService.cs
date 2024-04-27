@@ -4,6 +4,7 @@ using aspnetcore.ntier.DAL.Entities;
 using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,7 +21,8 @@ public class AuthService : IAuthService
     public AuthService(
         IUserRepository userRepository,
         IMapper mapper,
-        IConfiguration configuration)
+        IConfiguration configuration
+        )
     {
         _userRepository = userRepository;
         _mapper = mapper;
@@ -36,7 +38,7 @@ public class AuthService : IAuthService
             throw new UserNotFoundException();
 
         var userToReturn = _mapper.Map<UserToReturnDTO>(user);
-        userToReturn.Token = GenerateToken(user.UserId, user.UserName);
+        userToReturn.Token = GenerateToken(user.Id, user.UserName);
 
         return userToReturn;
     }
@@ -50,7 +52,7 @@ public class AuthService : IAuthService
         var addedUser = await _userRepository.AddAsync(_mapper.Map<User>(userToRegisterDTO));
 
         var userToReturn = _mapper.Map<UserToReturnDTO>(addedUser);
-        userToReturn.Token = GenerateToken(addedUser.UserId, addedUser.UserName);
+        userToReturn.Token = GenerateToken(addedUser.Id, addedUser.UserName);
 
         return userToReturn;
     }

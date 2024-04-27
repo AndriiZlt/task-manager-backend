@@ -4,7 +4,6 @@ using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetcore.ntier.API.Controllers;
-
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1")]
 [ApiController]

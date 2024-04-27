@@ -13,6 +13,8 @@ namespace aspnetcore.ntier.DAL.Entities
         public string DateCreated { get; set; }
         public string? DateDue {  get; set; }
         public string? DateCompleted { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         public ICollection<Subtask> Subtasks { get; set; }
 
         public Taskk()

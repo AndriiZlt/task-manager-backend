@@ -1,11 +1,15 @@
-﻿namespace aspnetcore.ntier.DAL.Entities;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class User
+namespace aspnetcore.ntier.DAL.Entities;
+
+public class User : IdentityUser<int>
 {
-    public int UserId { get; set; }
+    public int Id { get; set; }
     public string UserName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
-}
+    public ICollection<Taskk> Tasks { get; set; }
+
+}         

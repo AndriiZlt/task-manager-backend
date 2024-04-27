@@ -3,9 +3,11 @@ using aspnetcore.ntier.BLL;
 using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.DAL;
+using aspnetcore.ntier.DAL.DataContext;
 using aspnetcore.ntier.DAL.Repositories;
 using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -34,7 +36,8 @@ builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
 builder.Services.AddSignalR();
 
-builder.Services
+builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AspNetCoreNTierDbContext>().AddDefaultTokenProviders();
+/*builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -45,7 +48,12 @@ builder.Services
             ValidateIssuer = false,
             ValidateAudience = false
         };
-    });
+    });*/
+builder.Services.AddAuthentication(options => { 
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}) ; 
 
 builder.Services.RegisterDALDependencies(builder.Configuration);
 builder.Services.RegisterBLLDependencies(builder.Configuration);
