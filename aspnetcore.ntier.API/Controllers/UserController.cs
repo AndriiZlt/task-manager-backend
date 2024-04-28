@@ -1,12 +1,14 @@
 ﻿using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DTO.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetcore.ntier.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1")]
 [ApiController]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -30,11 +32,11 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("getuser")]
-    public async Task<IActionResult> GetUser(int userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetUser(CancellationToken cancellationToken)
     {
         try
         {
-            return Ok(await _userService.GetUserAsync(userId, cancellationToken));
+            return Ok(await _userService.GetUserAsync(cancellationToken));
         }
         catch (UserNotFoundException)
         {
