@@ -19,6 +19,7 @@ public class AspNetCoreNTierDbContext :IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
 
+
         modelBuilder.Entity<User>().HasData(
              new User
              {
@@ -30,6 +31,7 @@ public class AspNetCoreNTierDbContext :IdentityDbContext<IdentityUser>
                  Surname = "Doe",
              }
          );
+
 
         modelBuilder.Entity<IdentityRole>().HasData(
             new IdentityRole() { Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
@@ -45,6 +47,12 @@ public class AspNetCoreNTierDbContext :IdentityDbContext<IdentityUser>
         modelBuilder.Entity<Taskk>()
             .HasOne(t => t.User)
             .WithMany(u => u.Tasks)
+            .HasForeignKey(t => t.UserId)
+            .IsRequired();
+
+        modelBuilder.Entity<Subtask>()
+            .HasOne(t => t.User)
+            .WithMany(u => u.Subtasks)
             .HasForeignKey(t => t.UserId)
             .IsRequired();
     }

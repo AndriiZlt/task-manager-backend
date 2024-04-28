@@ -15,9 +15,10 @@ namespace aspnetcore.ntier.DAL.Repositories
         {
             _aspNetCoreNTierDbContext = aspNetCoreNTierDbContext;
         }
-        public async Task<List<Taskk>> GetListAsync()
+        public async Task<List<Taskk>> GetListAsync(int userId)
         {
-            return await _aspNetCoreNTierDbContext.Set<Taskk>().ToListAsync();
+            /*return await _aspNetCoreNTierDbContext.Set<Taskk>().ToListAsync();*/
+            return await _aspNetCoreNTierDbContext.Set<Taskk>().Where(t=>t.UserId == userId).ToListAsync();
         }
 
         public async Task<Taskk> GetAsync(Expression<Func<Taskk, bool>> filter = null, CancellationToken cancellationToken = default)

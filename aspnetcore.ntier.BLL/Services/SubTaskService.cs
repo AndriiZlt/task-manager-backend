@@ -3,7 +3,10 @@ using aspnetcore.ntier.DAL.Entities;
 using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 
 
@@ -15,24 +18,29 @@ namespace aspnetcore.ntier.BLL.Services
         private readonly ISubtaskRepository _subtaskRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<SubtaskService> _logger;
+        private readonly IHttpContextAccessor _httpContext;
 
 
-        public SubtaskService (ISubtaskRepository subtaskRepository, IMapper mapper, ILogger<SubtaskService> logger)
+        public SubtaskService (ISubtaskRepository subtaskRepository, IMapper mapper, ILogger<SubtaskService> logger, IHttpContextAccessor httpContext)
         {
             _subtaskRepository = subtaskRepository;
             _mapper = mapper;
             _logger = logger;
-
+            _httpContext = httpContext;
         }
 
         public async Task<List<SubtaskDTO>> GetSubtasksAsync(CancellationToken cancellationToken = default)
         {
-            var subtasksToReturn = await _subtaskRepository.GetListAsync();
+            var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var subtasksToReturn = await _subtaskRepository.GetListAsync(Int32.Parse(userId));
             return _mapper.Map<List<SubtaskDTO>>(subtasksToReturn);
         }
 
-        public async Task<SubtaskDTO> AddSubtaskAsync(SubtaskToAddDTO subtaskToAddDTO)
+        public async Task<SubtaskDTO> AddSubtaskAsync([FromBody] SubtaskToAddDTO subtaskToAddDTO)
         {
+            var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            subtaskToAddDTO.UserId = Convert.ToInt32(userId);
+
             var addedSubtask = await _subtaskRepository.AddAsync(_mapper.Map<Subtask>(subtaskToAddDTO));
             return _mapper.Map<SubtaskDTO>(addedSubtask);
         }
@@ -85,6 +93,7 @@ namespace aspnetcore.ntier.BLL.Services
             taskBeforeUpdate.Status = taskToUpdate.Status;
             taskBeforeUpdate.TaskId = taskToUpdate.TaskId;
             taskBeforeUpdate.DateCompleted = taskToUpdate.DateCompleted;
+            taskBeforeUpdate.UserId = (int)taskToUpdate.UserId;
 
             var taskAfterUpdate = _mapper.Map<Subtask>(taskBeforeUpdate);
 

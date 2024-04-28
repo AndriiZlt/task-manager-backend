@@ -11,5 +11,6 @@ public class SubtaskDTO
     public string DateCreated { get; set; } 
     public string? DateCompleted { get; set; }
     public int TaskId { get; set; }
+    public int? UserId { get; set; }
 
 }

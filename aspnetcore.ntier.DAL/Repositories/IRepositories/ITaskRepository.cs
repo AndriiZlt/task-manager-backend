@@ -7,7 +7,7 @@ namespace aspnetcore.ntier.DAL.Repositories.IRepositories
     {
         Task<Taskk> GetAsync(Expression<Func<Taskk, bool>> filter = null, CancellationToken cancellationToken = default);
 
-        Task<List<Taskk>> GetListAsync();
+        Task<List<Taskk>> GetListAsync(int userId);
 
         Task<Taskk> AddAsync(Taskk task);
 

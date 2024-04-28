@@ -5,7 +5,11 @@ using aspnetcore.ntier.DAL.Repositories;
 using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 
@@ -17,28 +21,35 @@ namespace aspnetcore.ntier.BLL.Services
         private readonly ITaskRepository _taskRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<TaskService> _logger;
+        private readonly IHttpContextAccessor _httpContext;
 
 
-        public TaskService (ITaskRepository taskRepository, IMapper mapper, ILogger<TaskService> logger)
+        public TaskService (ITaskRepository taskRepository, IMapper mapper, ILogger<TaskService> logger, IHttpContextAccessor httpContext)
         {
             _taskRepository = taskRepository;
             _mapper = mapper;
             _logger = logger;
+            _httpContext = httpContext;
 
         }
 
         public async Task<List<TaskDTO>> GetTasksAsync(CancellationToken cancellationToken = default)
         {
-            var tasksToReturn = await _taskRepository.GetListAsync();
+            var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var tasksToReturn = await _taskRepository.GetListAsync(Int32.Parse(userId));
             return _mapper.Map<List<TaskDTO>>(tasksToReturn);
         }
 
-        public async Task<TaskDTO> AddTaskAsync(TaskToAddDTO taskToAddDTO)
+        public async Task<TaskDTO> AddTaskAsync([FromBody] TaskToAddDTO taskToAddDTO)
         {
-            _logger.LogInformation("Due Date = {TaskId}", taskToAddDTO.DateDue);
+            var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            taskToAddDTO.UserId = Convert.ToInt32(userId);
+
             var addedTask = await _taskRepository.AddAsync(_mapper.Map<Taskk>(taskToAddDTO));
             return _mapper.Map<TaskDTO>(addedTask);
         }
+
+ 
 
         public async Task DeleteTaskAsync(int taskId)
         {
@@ -86,6 +97,8 @@ namespace aspnetcore.ntier.BLL.Services
             taskBeforeUpdate.Title = taskToUpdate.Title;
             taskBeforeUpdate.Description = taskToUpdate.Description;
             taskBeforeUpdate.Status = taskToUpdate.Status;
+            taskBeforeUpdate.UserId= (int)taskToUpdate.UserId;
+            taskBeforeUpdate.DateCompleted = taskToUpdate.DateCompleted;
 
             var taskAfterUpdate = _mapper.Map<Taskk>(taskBeforeUpdate);
 

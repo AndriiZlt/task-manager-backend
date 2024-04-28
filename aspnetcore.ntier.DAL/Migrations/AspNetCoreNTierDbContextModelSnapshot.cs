@@ -15,7 +15,7 @@ namespace aspnetcore.ntier.DAL.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.29");
 
             modelBuilder.Entity("aspnetcore.ntier.DAL.Entities.Friend", b =>
                 {
@@ -80,9 +80,14 @@ namespace aspnetcore.ntier.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TaskId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Subtasks");
                 });
@@ -196,7 +201,7 @@ namespace aspnetcore.ntier.DAL.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "55b456f3-ca06-4a1a-8fae-d6c67aa2a00b",
+                            ConcurrencyStamp = "7dea3af8-5960-407b-b63d-2d3082d96332",
                             Email = "johndoe@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -237,14 +242,14 @@ namespace aspnetcore.ntier.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "07a92304-df2f-45cd-a100-7b845fde6b00",
+                            Id = "ccbc9483-7a78-4329-a84e-1532de889cbf",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "2f62cdde-96f6-4be3-9983-181bcc425a78",
+                            Id = "03c6a3ba-6242-415f-8a06-0be6f1ecc712",
                             ConcurrencyStamp = "2",
                             Name = "User",
                             NormalizedName = "User"
@@ -425,7 +430,15 @@ namespace aspnetcore.ntier.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("aspnetcore.ntier.DAL.Entities.User", "User")
+                        .WithMany("Subtasks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Task");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("aspnetcore.ntier.DAL.Entities.Taskk", b =>
@@ -497,6 +510,8 @@ namespace aspnetcore.ntier.DAL.Migrations
 
             modelBuilder.Entity("aspnetcore.ntier.DAL.Entities.User", b =>
                 {
+                    b.Navigation("Subtasks");
+
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

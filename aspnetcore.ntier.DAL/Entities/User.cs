@@ -11,5 +11,6 @@ public class User : IdentityUser<int>
     public string Name { get; set; }
     public string Surname { get; set; }
     public ICollection<Taskk> Tasks { get; set; }
+    public ICollection<Subtask> Subtasks { get; set; }
 
 }         
