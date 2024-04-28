@@ -37,7 +37,7 @@ builder.Services.AddScoped<IFriendRepository, FriendRepository>();
 builder.Services.AddSignalR();
 
 builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AspNetCoreNTierDbContext>().AddDefaultTokenProviders();
-/*builder.Services
+builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -48,12 +48,14 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStor
             ValidateIssuer = false,
             ValidateAudience = false
         };
-    });*/
-builder.Services.AddAuthentication(options => { 
+    });
+/*builder.Services.AddAuthentication(options => { 
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}) ; 
+}) ; */
+
+/*builder.Services.AddAuthorization(); */
 
 builder.Services.RegisterDALDependencies(builder.Configuration);
 builder.Services.RegisterBLLDependencies(builder.Configuration);

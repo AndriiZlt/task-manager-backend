@@ -3,6 +3,7 @@ using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DTO.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetcore.ntier.API.Controllers
@@ -11,7 +12,7 @@ namespace aspnetcore.ntier.API.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1")]
     [ApiController]
-
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class TaskController : ControllerBase
     {
 
@@ -23,6 +24,7 @@ namespace aspnetcore.ntier.API.Controllers
             _taskService = taskService;
             _logger = logger;
         }
+
 
         [HttpGet("gettasks")]
         public async Task<IActionResult> GetTasks()

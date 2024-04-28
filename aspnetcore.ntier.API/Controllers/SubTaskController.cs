@@ -2,6 +2,7 @@
 using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.DTO.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetcore.ntier.API.Controllers
@@ -10,6 +11,7 @@ namespace aspnetcore.ntier.API.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
 
     public class SubtaskController : ControllerBase
     {
@@ -42,7 +44,6 @@ namespace aspnetcore.ntier.API.Controllers
         {
             try
             {
-                _logger.LogInformation("Subtask with these properties: {@TaskToUpdate} ADDING...", taskToAddDTO);
                 return Ok(await _subtaskService.AddSubtaskAsync(taskToAddDTO));
             }
             catch (Exception)

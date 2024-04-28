@@ -8,5 +8,6 @@ public class TaskToUpdateDTO
     public string Status { get; set; }
     public string? DateDue { get; set; }
     public string? DateCompleted { get; set; }
+    public int? UserId { get; set; }
 
 }

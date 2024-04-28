@@ -5,13 +5,13 @@ namespace aspnetcore.ntier.DAL.Repositories.IRepositories
 {
     public interface ISubtaskRepository:IGenericRepository<Subtask>
     {
-/*        Task<SubTask> GetAsync(Expression<Func<SubTask, bool>> filter = null, CancellationToken cancellationToken = default);
+        Task<Subtask> GetAsync(Expression<Func<Subtask, bool>> filter = null, CancellationToken cancellationToken = default);
 
-        Task<List<SubTask>> GetListAsync();
+        Task<List<Subtask>> GetListAsync(int userId);
 
-        Task<SubTask> AddAsync(SubTask task);
+        Task<Subtask> AddAsync(Subtask task);
 
-        Task<int> DeleteAsync(SubTask task);*/
+        Task<int> DeleteAsync(Subtask task);
 
         Task<Subtask> UpdateStatusTaskAsync(Subtask task);
 
