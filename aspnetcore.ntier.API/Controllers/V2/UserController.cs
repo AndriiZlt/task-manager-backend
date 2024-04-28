@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetcore.ntier.API.Controllers.V2;
 
-[Authorize]
+
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("2")]
 [ApiController]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -17,6 +18,19 @@ public class UserController : ControllerBase
     public UserController(IUserService userService)
     {
         _userService = userService;
+    }
+
+    [HttpGet("getuser")]
+    public async Task<IActionResult> GetUser(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return Ok(await _userService.GetUserAsync(cancellationToken));
+        }
+        catch (Exception)
+        {
+            return BadRequest("Something went wrong");
+        }
     }
 
     [HttpGet("getusers")]
