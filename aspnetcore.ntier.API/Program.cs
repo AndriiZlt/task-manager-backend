@@ -94,7 +94,7 @@ app.UseSwaggerUI(c =>
     }
 });
 
-app.MapHub<ChatHub>("chat-hub");
+app.MapHub<SignalHub>("signal-hub");
 
 app.Run();
 

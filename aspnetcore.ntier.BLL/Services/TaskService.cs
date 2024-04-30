@@ -1,16 +1,14 @@
 ﻿using aspnetcore.ntier.BLL.Services.IServices;
-using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DAL.Entities;
-using aspnetcore.ntier.DAL.Repositories;
 using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
-using System.Threading.Tasks;
+
 
 
 namespace aspnetcore.ntier.BLL.Services
@@ -22,15 +20,15 @@ namespace aspnetcore.ntier.BLL.Services
         private readonly IMapper _mapper;
         private readonly ILogger<TaskService> _logger;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly IHubContext<SignalHub> _signalrContext;
 
-
-        public TaskService (ITaskRepository taskRepository, IMapper mapper, ILogger<TaskService> logger, IHttpContextAccessor httpContext)
+        public TaskService (ITaskRepository taskRepository, IMapper mapper, ILogger<TaskService> logger, IHttpContextAccessor httpContext, IHubContext<SignalHub> signalrContext)
         {
             _taskRepository = taskRepository;
             _mapper = mapper;
             _logger = logger;
             _httpContext = httpContext;
-
+            _signalrContext = signalrContext;
         }
 
         public async Task<List<TaskDTO>> GetTasksAsync(CancellationToken cancellationToken = default)
@@ -105,6 +103,11 @@ namespace aspnetcore.ntier.BLL.Services
             _logger.LogInformation("Task with these properties: {@TaskToUpdate} has been updated", taskAfterUpdate);
 
             return _mapper.Map<TaskDTO>(await _taskRepository.UpdateTaskAsync(taskAfterUpdate));
+        }
+
+        private void sendNotification(int userId, string message)
+        {
+            _signalrContext.Clients.All.SendAsync("test");
         }
 
     }
