@@ -24,9 +24,9 @@ public class AspNetCoreNTierDbContext :IdentityDbContext<IdentityUser>
              new User
              {
                  Id = 1,
-                 UserName = "johndoe",
+                 UserName = "user0",
                  Email = "johndoe@gmail.com",
-                 Password = "123",
+                 Password = "Zxcv@345",
                  Name = "John",
                  Surname = "Doe",
              }

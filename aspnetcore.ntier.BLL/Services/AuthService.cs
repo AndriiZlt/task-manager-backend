@@ -64,6 +64,8 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(ClaimTypes.Name, username)
         };
+/*
+        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));*/
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
 

@@ -104,7 +104,7 @@ namespace aspnetcore.ntier.API.Controllers
             {
                 return BadRequest("Something went wrong");
             }
-        } 
+        }
 
     }
 }
