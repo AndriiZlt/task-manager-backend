@@ -1,3 +1,4 @@
+
 using aspnetcore.ntier.API;
 using aspnetcore.ntier.BLL;
 using aspnetcore.ntier.BLL.Services;
@@ -9,6 +10,7 @@ using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
@@ -22,7 +24,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "_myAllowSpecificOrigins",
                           policy =>
                           {
-                              policy.WithOrigins("http://localhost:4200");
+                              policy.WithOrigins("https://localhost:4200").AllowAnyMethod();
                           });
 });
 
@@ -36,7 +38,7 @@ builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
 builder.Services.AddSignalR();
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AspNetCoreNTierDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AspNetCoreNTierDbContext>().AddDefaultTokenProviders();
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -70,7 +72,7 @@ var app = builder.Build();
 app.UseCors(builder =>
         builder
         .WithOrigins("http://localhost:4200")
-        .AllowAnyMethod() 
+        .AllowAnyMethod()
         .AllowAnyHeader());
 
 app.UseSerilogRequestLogging();
@@ -94,7 +96,7 @@ app.UseSwaggerUI(c =>
     }
 });
 
-app.MapHub<ChatHub>("chat-hub");
+app.MapHub<SignalRHub>("signal-hub");
 
 app.Run();
 

@@ -1,16 +1,13 @@
 ﻿using aspnetcore.ntier.BLL.Services.IServices;
-using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DAL.Entities;
-using aspnetcore.ntier.DAL.Repositories;
 using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
-using System.Threading.Tasks;
+
 
 
 namespace aspnetcore.ntier.BLL.Services
@@ -24,7 +21,12 @@ namespace aspnetcore.ntier.BLL.Services
         private readonly IHttpContextAccessor _httpContext;
 
 
-        public TaskService (ITaskRepository taskRepository, IMapper mapper, ILogger<TaskService> logger, IHttpContextAccessor httpContext)
+        public TaskService (
+            ITaskRepository taskRepository, 
+            IMapper mapper, 
+            ILogger<TaskService> logger, 
+            IHttpContextAccessor httpContext 
+            )
         {
             _taskRepository = taskRepository;
             _mapper = mapper;
@@ -43,9 +45,11 @@ namespace aspnetcore.ntier.BLL.Services
         public async Task<TaskDTO> AddTaskAsync([FromBody] TaskToAddDTO taskToAddDTO)
         {
             var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            taskToAddDTO.UserId = Convert.ToInt32(userId);
+/*            taskToAddDTO.UserId = Convert.ToInt32(userId);*/
 
             var addedTask = await _taskRepository.AddAsync(_mapper.Map<Taskk>(taskToAddDTO));
+
+/*            this.sendNotification(userId,taskToAddDTO.UserId.ToString(), addedTask.Title);*/
             return _mapper.Map<TaskDTO>(addedTask);
         }
 
@@ -107,8 +111,6 @@ namespace aspnetcore.ntier.BLL.Services
             return _mapper.Map<TaskDTO>(await _taskRepository.UpdateTaskAsync(taskAfterUpdate));
         }
 
+
     }
 }
-
-
-/*            _logger.LogInformation("Service result {Count}", tasksToReturn.ToArray()[0]);*/
