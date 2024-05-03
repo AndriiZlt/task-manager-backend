@@ -28,21 +28,21 @@ public class AuthServiceTests
     {
         _userEntity = new User()
         {
-            UserId = UserId,
-            Username = "UserEntityUsername",
+            Id = UserId,
+            UserName = "UserEntityUsername",
             Name = "UserEntityName",
             Surname = "UserEntitySurname"
         };
 
         _userToLoginDTO = new UserToLoginDTO()
         {
-            Username = "UserToLoginDTOUsername",
+            UserName = "UserToLoginDTOUsername",
             Password = "UserToLoginDTOPassword"
         };
 
         _userToRegisterDTO = new UserToRegisterDTO()
         {
-            Username = "UserToRegisterDTOUsername",
+            UserName = "UserToRegisterDTOUsername",
             Name = "UserToRegisterDTOName",
             Surname = "UserToRegisterDTOSurname"
         };
@@ -82,7 +82,7 @@ public class AuthServiceTests
 
         //Assert
         Assert.IsType<UserToReturnDTO>(result);
-        Assert.Equal(_userEntity.UserId, result.UserId);
+        Assert.Equal(_userEntity.Id, result.Id);
         Assert.NotEmpty(result.Token);
     }
 
@@ -111,7 +111,7 @@ public class AuthServiceTests
 
         //Assert
         Assert.IsType<UserToReturnDTO>(result);
-        Assert.Equal(_userEntity.UserId, result.UserId);
+        Assert.Equal(_userEntity.Id, result.Id);
         Assert.NotEmpty(result.Token);
     }
 }

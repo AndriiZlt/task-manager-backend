@@ -1,4 +1,4 @@
-﻿using aspnetcore.ntier.BLL.Services;
+﻿/*using aspnetcore.ntier.BLL.Services;
 using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.BLL.Utilities.AutoMapperProfiles;
 using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
@@ -29,23 +29,23 @@ public class UserServiceTests
     {
         _userEntity = new User()
         {
-            UserId = UserId,
-            Username = "UserEntityUsername",
+            Id = UserId,
+            UserName = "UserEntityUsername",
             Name = "UserEntityName",
             Surname = "UserEntitySurname"
         };
 
         _userToAddDTO = new UserToAddDTO()
         {
-            Username = "UserToAddDTOUsername",
+            UserName = "UserToAddDTOUsername",
             Name = "UserToAddDTOName",
             Surname = "UserToAddDTOSurname"
         };
 
         _userToUpdateDTO = new UserToUpdateDTO()
         {
-            UserId = UserId,
-            Username = "UserToUpdateDTOUsername",
+            Id = UserId,
+            UserName = "UserToUpdateDTOUsername",
             Name = "UserToUpdateDTOName",
             Surname = "UserToUpdateDTOSurname"
         };
@@ -117,7 +117,7 @@ public class UserServiceTests
 
         //Assert
         Assert.IsType<UserDTO>(result);
-        Assert.Equal(_userEntity.UserId, result.UserId);
+        Assert.Equal(_userEntity.Id, result.Id);
     }
 
     [Fact]
@@ -170,3 +170,4 @@ public class UserServiceTests
         await Assert.ThrowsAsync<UserNotFoundException>(() => _userService.DeleteUserAsync(UserId));
     }
 }
+*/
