@@ -22,7 +22,7 @@ public class UserToLoginDTOValidatorTests
     {
         var userToLoginDTO = new UserToLoginDTO
         {
-            Username = username,
+            UserName = username,
             Password = password
         };
 
@@ -35,7 +35,7 @@ public class UserToLoginDTOValidatorTests
     {
         var userToLoginDTO = new UserToLoginDTO
         {
-            Username = "username",
+            UserName = "username",
             Password = "password"
         };
 

@@ -45,11 +45,9 @@ namespace aspnetcore.ntier.BLL.Services
         public async Task<TaskDTO> AddTaskAsync([FromBody] TaskToAddDTO taskToAddDTO)
         {
             var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-/*            taskToAddDTO.UserId = Convert.ToInt32(userId);*/
 
             var addedTask = await _taskRepository.AddAsync(_mapper.Map<Taskk>(taskToAddDTO));
 
-/*            this.sendNotification(userId,taskToAddDTO.UserId.ToString(), addedTask.Title);*/
             return _mapper.Map<TaskDTO>(addedTask);
         }
 
