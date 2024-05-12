@@ -66,16 +66,15 @@ namespace aspnetcore.ntier.API
         public async Task SendMessage(string targetUserId, string title)
         {
             var connectionId = Context.ConnectionId;
-            Lazy<string> sender;
+            Lazy<string>? sender;
             ConnectedUsers.Ids.TryGetValue(connectionId, out sender);
             var recipients = _connectedUsers.GetUsers(targetUserId);
             
 /*            _logger.LogInformation("Sender ID: {1} => Recipients: {2}", sender.Value, recipients.Keys);*/
             foreach (var recipient in recipients)
-
             {
                 _logger.LogInformation("recipient:{@users}", recipient);
-                await Clients.Client(recipient.Key).SendAsync("recieveMessage", sender.Value);
+                await Clients.Client(recipient.Key).SendAsync("recieveMessage", $"User with ID:{sender.Value} created task for you!");
             }
         }
 
