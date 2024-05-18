@@ -17,8 +17,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "_myAllowSpecificOrigins",
@@ -28,7 +26,6 @@ builder.Services.AddCors(options =>
                           });
 });
 
-
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
@@ -36,9 +33,10 @@ builder.Services.AddScoped<ISubtaskService, SubtaskService>();
 builder.Services.AddScoped<ISubtaskRepository, SubtaskRepository>();
 builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
-builder.Services.AddSignalR();
-builder.Services.AddSingleton<ConnectedUsers>();
 builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<IConnectionService, ConnectionService>();
+builder.Services.AddSignalR();
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AspNetCoreNTierDbContext>().AddDefaultTokenProviders();
 builder.Services
@@ -53,13 +51,6 @@ builder.Services
             ValidateAudience = false
         };
     });
-/*builder.Services.AddAuthentication(options => { 
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}) ; */
-
-/*builder.Services.AddAuthorization(); */
 
 builder.Services.RegisterDALDependencies(builder.Configuration);
 builder.Services.RegisterBLLDependencies(builder.Configuration);
@@ -68,8 +59,6 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 
 app.UseCors(builder =>
         builder

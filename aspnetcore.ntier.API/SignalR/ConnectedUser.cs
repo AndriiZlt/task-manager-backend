@@ -1,48 +1,92 @@
 ﻿
-
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json.Linq;
-using System.Collections.Concurrent;
+using NuGet.Protocol.Plugins;
+
 
 namespace aspnetcore.ntier.API
 {
-    public class ConnectedUsers
+    public class ConnectionService : IConnectionService
     {
-
         private readonly IMemoryCache _memoryCache;
-        private const string KEY = "user_cache";
-
-        public static ConcurrentDictionary<string, Lazy<string>> Ids = new ConcurrentDictionary<string, Lazy<string>>();
-
-        public ConnectedUsers(IMemoryCache memoryCache)
+        private readonly ILogger<ConnectionService> _logger;
+        public ConnectionService(IMemoryCache memoryCache, ILogger<ConnectionService> logger)
         {
-            this._memoryCache = memoryCache;
+            _memoryCache = memoryCache;
+            _logger = logger;
         }
 
-        
-        public void AddToCashe(ConcurrentDictionary<string, Lazy<string>> IDs)
+
+        public List<string> AddToCashe(string userId, string connectionId)
+        {
+            List<string> connectionList = _memoryCache.Get<List<string>>(userId);
+
+
+
+            if (connectionList != null)
+            {
+                var flag = false;
+                foreach (var connection in connectionList)
+                {
+                   if (connection == connectionId)
+                    {
+                        flag = true; break;
+                    }
+                }
+
+                if (!flag) 
+                {
+                    connectionList.Add(connectionId);
+                    setValue(userId, connectionList);
+                    setValue(connectionId, userId);
+                }
+
+            }
+            else
+            {
+                var newValue = new List<string>
+                {
+                    connectionId
+                };
+
+                setValue(userId, newValue);
+            }
+
+            return connectionList;
+
+        }
+
+        public void setValue(string key, object value)
         {
             var options = new MemoryCacheEntryOptions
             {
-                SlidingExpiration = TimeSpan.FromSeconds(10),
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
+                SlidingExpiration = TimeSpan.FromMinutes(60),
+                /* AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(100)*/
             };
 
-            _memoryCache.Set<ConcurrentDictionary<string, Lazy<string>>>(KEY,IDs, options);
+            _memoryCache.Set(key, value, options);
         }
 
-        public IEnumerable<KeyValuePair<string, Lazy<string>>> GetUsers(string targetUserId)
+        public List<string> GetUserConnections(string userId)
         {
 
-            var cachedUsers = _memoryCache.Get<ConcurrentDictionary<string, Lazy<string>>>(KEY);
-            if (cachedUsers is null)
-            {
-                var recipients = Ids.Where(x => x.Value.ToString() == targetUserId);
-                AddToCashe(Ids);
-                return recipients;
-            }
-            return cachedUsers.Where(u => u.Value.ToString() == targetUserId.ToString());
-            ;
+            List<string> userConnections = _memoryCache.Get<List<string>>(userId);
+
+            return userConnections;
         }
+
+        public string GetValue(string key)
+        {
+            return _memoryCache.Get<string>(key);
+        }
+
+        public string ClearConnections(string connectionId)
+        {
+            var userId = _memoryCache.Get<string>(connectionId);
+            _memoryCache.Remove(connectionId);
+            _memoryCache.Remove(userId);
+            return userId;
+        }
+
+
     }
 }
