@@ -33,6 +33,7 @@ builder.Services.AddScoped<ISubtaskService, SubtaskService>();
 builder.Services.AddScoped<ISubtaskRepository, SubtaskRepository>();
 builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
+builder.Services.AddScoped<IAlpacaService, AlpacaService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IConnectionService, ConnectionService>();
 builder.Services.AddSignalR();
