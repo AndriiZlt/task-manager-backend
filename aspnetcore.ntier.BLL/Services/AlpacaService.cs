@@ -1,4 +1,5 @@
-﻿using aspnetcore.ntier.DTO.DTOs;
+﻿using aspnetcore.ntier.BLL.Services.IServices;
+using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -137,6 +138,32 @@ namespace aspnetcore.ntier.BLL.Services
                 var orderJSON = JsonConvert.SerializeObject(orderToCreate);
                 var payload = new StringContent(orderJSON, Encoding.UTF8, "application/json");  
                 var response = client.PostAsync(this.tradingUri + "orders", payload).Result;
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return jsonResponse;
+            }
+
+        }
+
+        public async Task<string> GetTradesAsync(string keyId, string secretKey, string symbol)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("APCA-API-KEY-ID", keyId);
+                client.DefaultRequestHeaders.Add("APCA-API-SECRET-KEY", secretKey);
+                var response = client.GetAsync(this.dataUri + $"stocks/{symbol}/trades/latest").Result;
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return jsonResponse;
+            }
+
+        }
+
+        public async Task<string> GetLastBarAsync(string keyId, string secretKey, string symbol)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("APCA-API-KEY-ID", keyId);
+                client.DefaultRequestHeaders.Add("APCA-API-SECRET-KEY", secretKey);
+                var response = client.GetAsync(this.dataUri + $"stocks/{symbol}/bars/latest").Result;
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 return jsonResponse;
             }
