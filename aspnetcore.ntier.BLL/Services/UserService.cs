@@ -33,19 +33,6 @@ public class UserService : IUserService
         return _mapper.Map<List<UserDTO>>(usersToReturn);
     }
 
-    /*    public async Task<UserDTO> GetUserAsync(int userId, CancellationToken cancellationToken = default)
-        {
-            _logger.LogInformation("User with userId = {UserId} was requested", userId);
-            var userToReturn = await _userRepository.GetAsync(x => x.Id == userId, cancellationToken);
-
-            if (userToReturn is null)
-            {
-                _logger.LogError("User with userId = {UserId} was not found", userId);
-                throw new UserNotFoundException();
-            }
-
-            return _mapper.Map<UserDTO>(userToReturn);
-        }*/
     public async Task<UserDTO> GetUserAsync(CancellationToken cancellationToken = default)
     {
         var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);

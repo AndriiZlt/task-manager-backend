@@ -19,33 +19,20 @@ namespace aspnetcore.ntier.API
         public List<string> AddToCashe(string userId, string connectionId)
         {
             List<string> connectionList = _memoryCache.Get<List<string>>(userId);
-
-
-
-            if (connectionList != null)
+            if(connectionList != null)
             {
-                var flag = false;
-                foreach (var connection in connectionList)
+                if (connectionList.Find(x => x.Contains(connectionId)) != null)
                 {
-                   if (connection == connectionId)
-                    {
-                        flag = true; break;
-                    }
-                }
-
-                if (!flag) 
-                {
-                    connectionList.Add(connectionId);
+                    connectionList.Add("ConnectionService_" + connectionId);
                     setValue(userId, connectionList);
                     setValue(connectionId, userId);
-                }
-
+                } 
             }
             else
             {
                 var newValue = new List<string>
                 {
-                    connectionId
+                    "ConnectionService_" + connectionId
                 };
 
                 setValue(userId, newValue);
