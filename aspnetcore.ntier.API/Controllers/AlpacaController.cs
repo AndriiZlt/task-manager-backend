@@ -1,7 +1,6 @@
-﻿using aspnetcore.ntier.BLL.Services;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using aspnetcore.ntier.DTO.DTOs;
+using aspnetcore.ntier.BLL.Services.IServices;
 
 
 namespace aspnetcore.ntier.API.Controllers;
@@ -144,6 +143,36 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-key-id", out var keyId);
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.CreateOrdersAsync(keyId, secretKey, order));
+        }
+        catch (Exception)
+        {
+            return BadRequest("Something went wrong");
+        }
+    }
+
+    [HttpGet("trades/{symbol}")]
+    public async Task<IActionResult> GetTrades(string symbol)
+    {
+        try
+        {
+            Request.Headers.TryGetValue("apca-api-key-id", out var keyId);
+            Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
+            return Ok(await _alpacaService.GetTradesAsync(keyId, secretKey, symbol));
+        }
+        catch (Exception)
+        {
+            return BadRequest("Something went wrong");
+        }
+    }
+
+    [HttpGet("lastbar/{symbol}")]
+    public async Task<IActionResult> GetLastBar(string symbol)
+    {
+        try
+        {
+            Request.Headers.TryGetValue("apca-api-key-id", out var keyId);
+            Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
+            return Ok(await _alpacaService.GetLastBarAsync(keyId, secretKey, symbol));
         }
         catch (Exception)
         {
