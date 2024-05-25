@@ -67,7 +67,8 @@ namespace aspnetcore.ntier.API
             {
                 foreach (var connection in targetUserConnections)
                 {
-                    await Clients.Client(connection).SendAsync("recieveMessage", $"User with ID:{senderId} created task for you with title:'{title}'!");
+                    string connection_id = connection.Split('_')[1];
+                    await Clients.Client(connection_id).SendAsync("recieveMessage", $"User with ID:{senderId} created task for you with title:'{title}'!");
                 }
             }
 

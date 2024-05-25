@@ -1,15 +1,9 @@
-﻿using aspnetcore.ntier.DAL.Entities;
-using aspnetcore.ntier.DTO.DTOs;
+﻿using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
-using Microsoft.DotNet.MSIdentity.Shared;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace aspnetcore.ntier.BLL.Services
 {
