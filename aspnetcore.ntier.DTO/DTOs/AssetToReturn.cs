@@ -1,15 +1,9 @@
-﻿using Microsoft.CodeAnalysis.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace aspnetcore.ntier.DAL.Entities
+﻿
+namespace aspnetcore.ntier.DTO.DTOs
 {
-    public class Asset
+    public class AssetToReturn
     {
-        public string id {  get; set; }
+        public string id { get; set; }
         public string exchange { get; set; }
         public string symbol { get; set; }
         public string name { get; set; }
