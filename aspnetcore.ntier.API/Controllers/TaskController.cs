@@ -25,6 +25,9 @@ namespace aspnetcore.ntier.API.Controllers
         }
 
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpGet("gettasks")]
         public async Task<IActionResult> GetTasks()
         {
@@ -39,6 +42,10 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpPost("addtask")]
         public async Task<IActionResult> AddTask(TaskToAddDTO taskToAddDTO)
         {
@@ -53,6 +60,9 @@ namespace aspnetcore.ntier.API.Controllers
         }
 
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpPut("updatestatus")]
         public async Task<IActionResult> UpdateStatusTask(int taskId)
         {
@@ -70,6 +80,10 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpPut("updatetask")]
         public async Task<IActionResult> UpdateTask(TaskDTO taskToUpdate)
         {
@@ -87,6 +101,10 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpDelete("deletetask")]
         public async Task<IActionResult> DeleteTask(int taskId)
         {
