@@ -15,6 +15,9 @@ public class AlpacaController : ControllerBase
     _alpacaService = alpacaService;
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type=typeof(ValidationProblemDetails))]
     [HttpGet("assets")]
     public async Task<IActionResult> GetAssets()
     {
@@ -30,6 +33,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("asset/{assetId}")]
     public async Task<IActionResult> GetAsset(string assetId)
     {
@@ -45,6 +51,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("positions")]
     public async Task<IActionResult> GetPositions()
     {
@@ -60,6 +69,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpDelete("position/{asset_id}")]
     public async Task<IActionResult> ClosePosition(string asset_id)
     {
@@ -75,6 +87,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("transactions")]
     public async Task<IActionResult> GetTransactions()
     {
@@ -90,6 +105,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bars/{symbol}")]
     public async Task<IActionResult> GetMonthBars(string symbol)
     {
@@ -105,6 +123,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("account")]
     public async Task<IActionResult> GetAccount()
     {
@@ -120,7 +141,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
-
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("orders")]
     public async Task<IActionResult> GetOrders()
     {
@@ -136,6 +159,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("order")]
     public async Task<IActionResult> CreateOrder(OrderDTO order)
     {
@@ -151,6 +177,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("trades/{symbol}")]
     public async Task<IActionResult> GetTrades(string symbol)
     {
@@ -166,6 +195,9 @@ public class AlpacaController : ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("lastbar/{symbol}")]
     public async Task<IActionResult> GetLastBar(string symbol)
     {
