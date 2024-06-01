@@ -8,11 +8,10 @@ namespace aspnetcore.ntier.API
     public class ConnectionService : IConnectionService
     {
         private readonly IMemoryCache _memoryCache;
-        private readonly ILogger<ConnectionService> _logger;
-        public ConnectionService(IMemoryCache memoryCache, ILogger<ConnectionService> logger)
+
+        public ConnectionService(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
-            _logger = logger;
         }
 
 

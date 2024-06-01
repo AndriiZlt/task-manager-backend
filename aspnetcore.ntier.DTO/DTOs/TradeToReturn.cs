@@ -13,13 +13,13 @@ namespace aspnetcore.ntier.DTO.DTOs
 
     public class Trade
     {
-        public string[] c { get; set; }
-        public int i { get; set; }
-        public float p { get; set; }
-        public int s { get; set; }
-        public string t { get; set; }
-        public string x { get; set; }
-        public string z { get; set; }
+        public string[] C { get; set; }
+        public int I { get; set; }
+        public float P { get; set; }
+        public int S { get; set; }
+        public string T { get; set; }
+        public string X { get; set; }
+        public string Z { get; set; }
     }
 
 

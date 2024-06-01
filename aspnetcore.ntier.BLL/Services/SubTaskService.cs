@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Security.Claims;
 
 
@@ -17,15 +18,13 @@ namespace aspnetcore.ntier.BLL.Services
 
         private readonly ISubtaskRepository _subtaskRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<SubtaskService> _logger;
         private readonly IHttpContextAccessor _httpContext;
 
 
-        public SubtaskService (ISubtaskRepository subtaskRepository, IMapper mapper, ILogger<SubtaskService> logger, IHttpContextAccessor httpContext)
+        public SubtaskService (ISubtaskRepository subtaskRepository, IMapper mapper,  IHttpContextAccessor httpContext)
         {
             _subtaskRepository = subtaskRepository;
             _mapper = mapper;
-            _logger = logger;
             _httpContext = httpContext;
         }
 
@@ -51,7 +50,7 @@ namespace aspnetcore.ntier.BLL.Services
 
             if (taskToDelete is null)
             {
-                _logger.LogError("Task with taskId = {TaskId} was not found", taskId);
+                Log.Information("Task with taskId = {TaskId} was not found", taskId);
                 throw new KeyNotFoundException();
             }
 
@@ -63,7 +62,7 @@ namespace aspnetcore.ntier.BLL.Services
             var task = await _subtaskRepository.GetAsync(x => x.Id == taskId);
             if (task is null)
             {
-                _logger.LogError("Task with taskId = {TaskId} was not found", taskId);
+                Log.Information("Task with taskId = {TaskId} was not found", taskId);
                 throw new KeyNotFoundException();
             }
 
@@ -73,7 +72,7 @@ namespace aspnetcore.ntier.BLL.Services
 
             var taskToUpdate = _mapper.Map<Subtask>(task);
 
-            _logger.LogInformation("Task with these properties: {@TaskToUpdate} has been updated", task);
+            Log.Information("Task with these properties: {@TaskToUpdate} has been updated", task);
 
             return _mapper.Map<SubtaskDTO>(await _subtaskRepository.UpdateStatusTaskAsync(taskToUpdate));
         }
@@ -84,7 +83,7 @@ namespace aspnetcore.ntier.BLL.Services
 
             if (taskBeforeUpdate is null)
             {
-                _logger.LogError("Task with taskId = {TaskId} was not found", taskToUpdate.Id);
+                Log.Information("Task with taskId = {TaskId} was not found", taskToUpdate.Id);
                 throw new KeyNotFoundException();
             }
 
@@ -97,7 +96,7 @@ namespace aspnetcore.ntier.BLL.Services
 
             var taskAfterUpdate = _mapper.Map<Subtask>(taskBeforeUpdate);
 
-            _logger.LogInformation("Task with these properties: {@TaskToUpdate} has been updated", taskAfterUpdate);
+            Log.Information("Task with these properties: {@TaskToUpdate} has been updated", taskAfterUpdate);
 
             return _mapper.Map<SubtaskDTO>(await _subtaskRepository.UpdateTaskAsync(taskAfterUpdate));
         }

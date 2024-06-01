@@ -3,25 +3,23 @@ namespace aspnetcore.ntier.DTO.DTOs
 {
     public class PositionToReturn
     {
-        public string asset_id { get; set; }
-        public string exchange { get; set; }
-        public string symbol { get; set; }
-        public string name { get; set; }
-        public string status { get; set; }
-        public string avg_entry_price { get; set; }
-        public string change_today { get; set; }
-        public string cost_basis { get; set; }
-        public string current_price { get; set; }
-        public string lastday_price { get; set; }
-        public string market_value { get; set; }
-        public string qty { get; set; }
-        public string qty_available { get; set; }
-        public string side { get; set; }
-        public string unrealized_intraday_pl { get; set; }
-        public string unrealized_intraday_plpc { get; set; }
-        public string unrealized_pl { get; set; }
-        public string unrealized_plpc { get; set; }
-
-
+        public string Asset_Id { get; set; }
+        public string Exchange { get; set; }
+        public string Symbol { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
+        public string Avg_Entry_Price { get; set; }
+        public string Change_Today { get; set; }
+        public string Cost_Basis { get; set; }
+        public string Current_Price { get; set; }
+        public string Lastday_Price { get; set; }
+        public string Market_Value { get; set; }
+        public string Qty { get; set; }
+        public string Qty_Available { get; set; }
+        public string Side { get; set; }
+        public string Unrealized_Intraday_Pl { get; set; }
+        public string Unrealized_Intraday_Plpc { get; set; }
+        public string Unrealized_Pl { get; set; }
+        public string Unrealized_Plpc { get; set; }
     }
 }

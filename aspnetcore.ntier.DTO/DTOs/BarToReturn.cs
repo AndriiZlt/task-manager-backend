@@ -3,14 +3,14 @@ namespace aspnetcore.ntier.DTO.DTOs
 {
     public class BarToReturn
     {
-        public float c { get; set; }
-        public float h { get; set; }
-        public float l { get; set; }
-        public int n { get; set; }
-        public float o { get; set; }
-        public string t { get; set; }
-        public int v { get; set; }
-        public float vw { get; set; }
+        public float C { get; set; }
+        public float H { get; set; }
+        public float L { get; set; }
+        public int N { get; set; }
+        public float O { get; set; }
+        public string T { get; set; }
+        public int V { get; set; }
+        public float VW { get; set; }
 
     }
 }

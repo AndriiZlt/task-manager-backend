@@ -3,8 +3,8 @@ namespace aspnetcore.ntier.DTO.DTOs
 {
     public class AlpacaAccount
     {
-        public bool account_blocked { get; set; }
-        public string account_number { get; set; }
+        public bool Account_Blocked { get; set; }
+        public string Account_Number { get; set; }
 /*        public string accrued_fees { get; set; }
         public object admin_configurations { get; set; }
         public string balance_asof { get; set; }
@@ -19,7 +19,7 @@ namespace aspnetcore.ntier.DTO.DTOs
         public string daytrading_buying_power { get; set; }
         public string effective_buying_power { get; set; }
         public string equity { get; set; }*/
-        public string id { get; set; }
+        public string Id { get; set; }
  /*       public string initial_margin { get; set; }
         public string intraday_adjustments { get; set; }
         public string last_equity { get; set; }

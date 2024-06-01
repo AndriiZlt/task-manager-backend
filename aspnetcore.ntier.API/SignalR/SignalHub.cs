@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.SignalR;
+using Serilog;
 
 
 
@@ -9,19 +10,17 @@ namespace aspnetcore.ntier.API
 
     public class SignalRHub : Hub
     {
-        private readonly ILogger<SignalRHub> _logger;
         private readonly IConnectionService _connectionService;
 
-        public SignalRHub( ILogger<SignalRHub> logger, IConnectionService connectionService)
+        public SignalRHub( IConnectionService connectionService)
         {
-            _logger = logger;
             _connectionService = connectionService;
         }
 
         public override async Task OnConnectedAsync()
         {
             var currentConnectionId = Context.ConnectionId;
-            _logger.LogInformation("Connections started for {s}", currentConnectionId);
+            Log.Information("Connections started for {s}", currentConnectionId);
             await Clients.Client(currentConnectionId.ToString()).SendAsync("status", "connected");
             await base.OnConnectedAsync();
         }
@@ -32,11 +31,11 @@ namespace aspnetcore.ntier.API
             {
                 var currentConnectionId = Context.ConnectionId;
                 string userId = _connectionService.ClearConnections(currentConnectionId);
-                _logger.LogInformation("User {connectionId} disconnected", userId);
+                Log.Information("User {connectionId} disconnected", userId);
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogInformation("Error in Removing user. {1}", exception);
+                Log.Error("An unexpected error occurred in SignalRHub OnDisconnectedAsync function", ex);
             }
 
         }
@@ -47,11 +46,12 @@ namespace aspnetcore.ntier.API
             try
             {
                 List<string> updatedUserConnections = _connectionService.AddToCashe(userId.ToString(), currentConnectionId);
-                _logger.LogInformation("User {userId} connections: {@response}", userId,updatedUserConnections);
+                Log.Information("User {userId} connections: {@response}", userId,updatedUserConnections);
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogInformation($"Error in Register user {userId} with connectionId {currentConnectionId}");
+                Log.Error("An unexpected error occurred in SignalRHub Register function", ex);
+                Log.Information($"Error in Register user {userId} with connectionId {currentConnectionId}");
             }
 
         }
@@ -61,7 +61,7 @@ namespace aspnetcore.ntier.API
             List<string> targetUserConnections = _connectionService.GetUserConnections(targetUserId);
             var currentConnectionId = Context.ConnectionId;
             var senderId = _connectionService.GetValue(currentConnectionId);
-            _logger.LogInformation("Target userId:{id}. Connections:{@connections}", targetUserId,targetUserConnections);
+            Log.Information("Target userId:{id}. Connections:{@connections}", targetUserId,targetUserConnections);
 
             if (targetUserConnections != null)
             {

@@ -18,13 +18,11 @@ namespace aspnetcore.ntier.BLL.Services
     public class AlpacaService : IAlpacaService
     {
         private readonly IMapper _mapper;
-        private readonly ILogger<AlpacaService> _logger;
         private readonly Uri tradingUri = new Uri("https://paper-api.alpaca.markets/v2/");
         private readonly Uri dataUri = new Uri("https://data.alpaca.markets/v2/"); 
-        public AlpacaService(IMapper mapper, ILogger<AlpacaService> logger)
+        public AlpacaService(IMapper mapper)
         {
             _mapper = mapper;
-            _logger = logger;
         }
 
         public async Task<List<AssetToReturn>> GetAssetsAsync(string keyId, string secretKey)

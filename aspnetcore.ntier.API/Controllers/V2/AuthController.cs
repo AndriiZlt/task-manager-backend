@@ -2,6 +2,7 @@
 using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace aspnetcore.ntier.API.Controllers.V2;
 
@@ -26,12 +27,14 @@ public class AuthController : ControllerBase
 
             return Ok(user);
         }
-        catch (UserNotFoundException)
+        catch (UserNotFoundException ex)
         {
+            Log.Error("UserNotFoundException in Login controller", ex);
             return Unauthorized();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error(ex, "An unexpected error occurred in Login controller");
             return BadRequest("Something went wrong");
         }
     }
@@ -43,8 +46,9 @@ public class AuthController : ControllerBase
         {
             return Ok(await _authService.RegisterAsync(userToRegisterDTO));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in Register controller", ex);
             return BadRequest("Something went wrong");
         }
     }

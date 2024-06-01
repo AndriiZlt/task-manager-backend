@@ -2,6 +2,7 @@
 using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace aspnetcore.ntier.API.Controllers;
 
@@ -24,8 +25,9 @@ public class FriendController : ControllerBase
         {
             return Ok(await _friendService.GetFriendsAsync());
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetFriends controller", ex);
             return BadRequest("Something went wrong");
         }
     }
@@ -38,8 +40,9 @@ public class FriendController : ControllerBase
         {
             return Ok(await _friendService.AddFriendAsync(friendToAddDTO));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in AddFriend controller", ex);
             return BadRequest("Something went wrong");
         }
     }
@@ -53,12 +56,14 @@ public class FriendController : ControllerBase
             await _friendService.DeleteFriendAsync(friendId);
             return Ok();
         }
-        catch (UserNotFoundException)
+        catch (UserNotFoundException ex)
         {
+            Log.Error("UserNotFound Exception in DeleteFriend controller", ex);
             return NotFound("Friend not found");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in DeleteFriend controller", ex);
             return BadRequest("Something went wrong");
         }
     }

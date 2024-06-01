@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using aspnetcore.ntier.DTO.DTOs;
 using aspnetcore.ntier.BLL.Services.IServices;
+using Serilog;
 
 
 namespace aspnetcore.ntier.API.Controllers;
@@ -24,8 +25,9 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetAssetsAsync(keyId,secretKey));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetAssets controller", ex);
             return BadRequest("Something went wrong");
         }
     }
@@ -39,8 +41,9 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetAssetAsync(keyId, secretKey, assetId));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetAsset controller", ex);
             return BadRequest("Something went wrong");
         }
     }
@@ -54,8 +57,10 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetPositionsAsync(keyId, secretKey));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetPositions controller", ex);
+
             return BadRequest("Something went wrong");
         }
     }
@@ -69,8 +74,10 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.ClosePositionAsync(keyId, secretKey, asset_id));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in ClosePosition controller", ex);
+
             return BadRequest("Something went wrong");
         }
     }
@@ -84,8 +91,10 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetTransactionsAsync(keyId, secretKey));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetTransactions controller", ex);
+
             return BadRequest("Something went wrong");
         }
     }
@@ -99,8 +108,10 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetMonthBarsAsync(keyId, secretKey, symbol));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetMonthBars controller", ex);
+
             return BadRequest("Something went wrong");
         }
     }
@@ -114,8 +125,10 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetAccountAsync(keyId, secretKey));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetAccount controller", ex);
+
             return BadRequest("Something went wrong");
         }
     }
@@ -130,8 +143,10 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetOrdersAsync(keyId, secretKey));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetOrders controller", ex);
+
             return BadRequest("Something went wrong");
         }
     }
@@ -145,8 +160,10 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.CreateOrdersAsync(keyId, secretKey, order));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in CreateOrder controller", ex);
+
             return BadRequest("Something went wrong");
         }
     }
@@ -160,8 +177,9 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetTradesAsync(keyId, secretKey, symbol));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetTrades controller", ex);
             return BadRequest("Something went wrong");
         }
     }
@@ -175,8 +193,9 @@ public class AlpacaController : ControllerBase
             Request.Headers.TryGetValue("apca-api-secret-key", out var secretKey);
             return Ok(await _alpacaService.GetLastBarAsync(keyId, secretKey, symbol));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error("An unexpected error occurred in GetLastBar controller", ex);
             return BadRequest("Something went wrong");
         }
     }

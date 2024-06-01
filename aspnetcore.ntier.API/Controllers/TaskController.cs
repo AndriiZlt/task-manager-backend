@@ -4,6 +4,7 @@ using aspnetcore.ntier.BLL.Services.IServices;
 using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace aspnetcore.ntier.API.Controllers
 {
@@ -16,12 +17,10 @@ namespace aspnetcore.ntier.API.Controllers
     {
 
         private readonly ITaskService _taskService;
-        private readonly ILogger<TaskService> _logger;
 
-        public TaskController(ITaskService taskService, ILogger<TaskService> logger)
+        public TaskController(ITaskService taskService)
         {
             _taskService = taskService;
-            _logger = logger;
         }
 
 
@@ -33,8 +32,9 @@ namespace aspnetcore.ntier.API.Controllers
                 var result = await _taskService.GetTasksAsync();
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error("An unexpected error occurred in GetTasks controller", ex);
                 return BadRequest("Something went wrong");
             }
         }
@@ -46,8 +46,9 @@ namespace aspnetcore.ntier.API.Controllers
             {
                 return Ok(await _taskService.AddTaskAsync(taskToAddDTO));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error("An unexpected error occurred in AddTask controller", ex);
                 return BadRequest("Something went wrong");
             }
         }
@@ -60,12 +61,14 @@ namespace aspnetcore.ntier.API.Controllers
             {
                 return Ok(await _taskService.UpdateStatusTaskAsync(taskId));
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
+                Log.Error("KeyNotFoundException in UpdateStatusTask controller", ex);
                 return NotFound("Task not found");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error( "An unexpected error occurred in UpdateStatusTask controller", ex);
                 return BadRequest("Something went wrong");
             }
         }
@@ -77,12 +80,14 @@ namespace aspnetcore.ntier.API.Controllers
             {
                 return Ok(await _taskService.UpdateTaskAsync(taskToUpdate));
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
+                Log.Error("KeyNotFoundException in UpdateTask controller", ex);
                 return NotFound("Task not found");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error("An unexpected error occurred in UpdateTasks controller", ex);
                 return BadRequest("Something went wrong");
             }
         }
@@ -95,12 +100,14 @@ namespace aspnetcore.ntier.API.Controllers
                 await _taskService.DeleteTaskAsync(taskId);
                 return Ok();
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
+                Log.Error("KeyNotFoundException in DeleteTaskAsync controller", ex);
                 return NotFound("Task not found");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error("An unexpected error occurred in DeleteTaskAsync controller", ex);
                 return BadRequest("Something went wrong");
             }
         }

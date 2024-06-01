@@ -3,20 +3,20 @@ namespace aspnetcore.ntier.DTO.DTOs
 {
     public class AssetToReturn
     {
-        public string id { get; set; }
-        public string exchange { get; set; }
-        public string symbol { get; set; }
-        public string name { get; set; }
-        public string active { get; set; }
-        public bool tradable { get; set; }
-        public bool marginable { get; set; }
-        public int maintenance_margin_requirement { get; set; }
-        public bool shortable { get; set; }
-        public bool easy_to_borrow { get; set; }
-        public bool fractionable { get; set; }
-        public float min_order_size { get; set; }
-        public float min_trade_increment { get; set; }
-        public float price_increment { get; set; }
+        public string Id { get; set; }
+        public string Exchange { get; set; }
+        public string Symbol { get; set; }
+        public string Name { get; set; }
+        public string Active { get; set; }
+        public bool Tradable { get; set; }
+        public bool Marginable { get; set; }
+        public int Maintenance_margin_requirement { get; set; }
+        public bool Shortable { get; set; }
+        public bool Easy_to_borrow { get; set; }
+        public bool Fractionable { get; set; }
+        public float Min_order_size { get; set; }
+        public float Min_trade_increment { get; set; }
+        public float Price_increment { get; set; }
 
     }
 }

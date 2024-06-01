@@ -5,6 +5,7 @@ using aspnetcore.ntier.DAL.Repositories.IRepositories;
 using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace aspnetcore.ntier.BLL.Services;
 
@@ -12,19 +13,17 @@ public class FriendService : IFriendService
 {
     private readonly IFriendRepository _friendRepository;
     private readonly IMapper _mapper;
-    private readonly ILogger<FriendService> _logger;
 
-    public FriendService(IFriendRepository friendRepository, IMapper mapper, ILogger<FriendService> logger)
+    public FriendService(IFriendRepository friendRepository, IMapper mapper)
     {
         _friendRepository = friendRepository;
         _mapper = mapper;
-        _logger = logger;
     }
 
     public async Task<List<FriendDTO>> GetFriendsAsync(CancellationToken cancellationToken = default)
     {
         var friendsToReturn = await _friendRepository.GetListAsync(cancellationToken: cancellationToken);
-        _logger.LogInformation("List of {Count} friends has been returned", friendsToReturn.Count);
+        Log.Information("List of {Count} friends has been returned", friendsToReturn.Count);
          
         return _mapper.Map<List<FriendDTO>>(friendsToReturn);
     }
@@ -32,7 +31,6 @@ public class FriendService : IFriendService
 
     public async Task<FriendDTO> AddFriendAsync(FriendToAddDTO friendToAddDTO)
     {
-/*        friendToAddDTO.UserName = userToAddDTO.UserName.ToLower();*/
         var addedUser = await _friendRepository.AddAsync(_mapper.Map<Friend>(friendToAddDTO));
 
         return _mapper.Map<FriendDTO>(addedUser);
@@ -44,7 +42,7 @@ public class FriendService : IFriendService
 
         if (friendToDelete is null)
         {
-            _logger.LogError("Friend with Id = {Id} was not found", friendId);
+            Log.Information("Friend with Id = {Id} was not found", friendId);
             throw new UserNotFoundException();
         }
 

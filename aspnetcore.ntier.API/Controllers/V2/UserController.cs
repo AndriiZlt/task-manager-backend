@@ -3,6 +3,7 @@ using aspnetcore.ntier.BLL.Utilities.CustomExceptions;
 using aspnetcore.ntier.DTO.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace aspnetcore.ntier.API.Controllers.V2;
 
@@ -27,8 +28,9 @@ public class UserController : ControllerBase
         {
             return Ok(await _userService.GetUserAsync(cancellationToken));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error(ex, "An unexpected error occurred in GetUser controller");
             return BadRequest("Something went wrong");
         }
     }
@@ -40,8 +42,9 @@ public class UserController : ControllerBase
         {
             return Ok(await _userService.GetUsersAsync(cancellationToken));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error(ex, "An unexpected error occurred in GetUsers controller");
             return BadRequest("Something went wrong");
         }
     }
