@@ -24,6 +24,10 @@ namespace aspnetcore.ntier.API.Controllers
             _subtaskService = subtaskService;
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpGet("getsubtasks")]
         public async Task<IActionResult> GetTasks()
         {
@@ -39,6 +43,10 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpPost("addsubtask")]
         public async Task<IActionResult> AddTask(SubtaskToAddDTO taskToAddDTO)
         {
@@ -54,6 +62,9 @@ namespace aspnetcore.ntier.API.Controllers
         }
 
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpPut("updatestatus")]
         public async Task<IActionResult> UpdateStatusTask(int taskId)
         {
@@ -73,6 +84,10 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpPut("updatesubtask")]
         public async Task<IActionResult> UpdateTask(SubtaskDTO taskToUpdate)
         {
@@ -92,6 +107,10 @@ namespace aspnetcore.ntier.API.Controllers
             }
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [HttpDelete("deletesubtask")]
         public async Task<IActionResult> DeleteTask(int taskId)
         {

@@ -19,6 +19,10 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("getusers")]
     public async Task<IActionResult> GetUsers()
     {
@@ -33,6 +37,10 @@ public class UserController : ControllerBase
         }
     }
 
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("getuser")]
     public async Task<IActionResult> GetUser(CancellationToken cancellationToken)
     {
@@ -52,6 +60,10 @@ public class UserController : ControllerBase
         }
     }
 
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("adduser")]
     public async Task<IActionResult> AddUser(UserToAddDTO userToAddDTO)
     {
@@ -66,6 +78,10 @@ public class UserController : ControllerBase
         }
     }
 
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPut("updateuser")]
     public async Task<IActionResult> UpdateUser(UserToUpdateDTO userToUpdateDTO)
     {
@@ -85,6 +101,10 @@ public class UserController : ControllerBase
         }
     }
 
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpDelete("deleteuser")]
     public async Task<IActionResult> DeleteUser(int userId)
     {

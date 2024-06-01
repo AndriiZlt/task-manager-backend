@@ -1,16 +1,12 @@
 ﻿using aspnetcore.ntier.BLL.Services.IServices;
-using aspnetcore.ntier.DAL.Entities;
 using aspnetcore.ntier.DTO.DTOs;
 using AutoMapper;
-using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System;
-using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
+
 
 
 namespace aspnetcore.ntier.BLL.Services
@@ -25,6 +21,10 @@ namespace aspnetcore.ntier.BLL.Services
             _mapper = mapper;
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<List<AssetToReturn>> GetAssetsAsync(string keyId, string secretKey)
         {
             using (var client = new HttpClient())
@@ -43,6 +43,10 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<AssetToReturn> GetAssetAsync(string keyId, string secretKey, string assetId)
         {
             using (var client = new HttpClient())
@@ -61,6 +65,10 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<List<PositionToReturn>> GetPositionsAsync(string keyId, string secretKey)
         {
             using (var client = new HttpClient())
@@ -79,6 +87,10 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<PositionToReturn> ClosePositionAsync(string keyId, string secretKey, string asset_id)
         {
             using (var client = new HttpClient())
@@ -97,6 +109,9 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<List<TransactionToReturn>> GetTransactionsAsync(string keyId, string secretKey)
         {
             using (var client = new HttpClient())
@@ -115,6 +130,10 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<BarMonthData> GetMonthBarsAsync(string keyId, string secretKey, string symbol)
         {
             using (var client = new HttpClient())
@@ -136,6 +155,10 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<BarToReturn> GetLastBarAsync(string keyId, string secretKey, string symbol)
         {
             using (var client = new HttpClient())
@@ -154,6 +177,9 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<AlpacaAccount> GetAccountAsync(string keyId, string secretKey)
         {
             using (var client = new HttpClient())
@@ -173,7 +199,9 @@ namespace aspnetcore.ntier.BLL.Services
         }
 
 
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<List<OrderToReturn>> GetOrdersAsync(string keyId, string secretKey)
         {
             using (var client = new HttpClient())
@@ -192,6 +220,10 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<OrderToReturn> CreateOrdersAsync(string keyId, string secretKey, OrderDTO orderToCreate)
         {
             using (var client = new HttpClient())
@@ -212,6 +244,10 @@ namespace aspnetcore.ntier.BLL.Services
 
         }
 
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public async Task<TradeToReturn> GetTradesAsync(string keyId, string secretKey, string symbol)
         {
             using (var client = new HttpClient())

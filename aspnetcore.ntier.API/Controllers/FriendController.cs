@@ -18,6 +18,10 @@ public class FriendController : ControllerBase
         _friendService = friendService;
     }
 
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("getfriends")]
     public async Task<IActionResult> GetFriends()
     {
@@ -33,6 +37,9 @@ public class FriendController : ControllerBase
     }
 
 
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("addfriend")]
     public async Task<IActionResult> AddFriend(FriendToAddDTO friendToAddDTO)
     {
@@ -47,7 +54,9 @@ public class FriendController : ControllerBase
         }
     }
 
-
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpDelete("deletefriend")]
     public async Task<IActionResult> DeleteFriend(int friendId)
     {
