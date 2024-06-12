@@ -64,7 +64,7 @@ namespace aspnetcore.ntier.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
-        [HttpPut("updatestatus")]
+        [HttpPut("updatestatus/{taskId}")]
         public async Task<IActionResult> UpdateStatusTask(int taskId)
         {
             try
@@ -110,7 +110,7 @@ namespace aspnetcore.ntier.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
-        [HttpDelete("deletetask")]
+        [HttpDelete("deletetask/{taskId}")]
         public async Task<IActionResult> DeleteTask(int taskId)
         {
             try

@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.Extensions.Caching.Memory;
-using NuGet.Protocol.Plugins;
+using Serilog;
 
 
 namespace aspnetcore.ntier.API
@@ -18,7 +18,8 @@ namespace aspnetcore.ntier.API
         public List<string> AddToCashe(string userId, string connectionId)
         {
             List<string> connectionList = _memoryCache.Get<List<string>>(userId);
-            if(connectionList != null)
+/*            Log.Information("Before adding: Connection for user {d}, List: {@s}", userId,connectionList);*/
+            if (connectionList != null)
             {
                 if (connectionList.Find(x => x.Contains(connectionId)) != null)
                 {
@@ -35,8 +36,11 @@ namespace aspnetcore.ntier.API
                 };
 
                 setValue(userId, newValue);
+                setValue(connectionId, userId);
             }
 
+            Log.Information("Connections for user {d}, List: {@s}", userId, _memoryCache.Get<List<string>>(userId));
+            connectionList = _memoryCache.Get<List<string>>(userId);
             return connectionList;
 
         }
