@@ -22,7 +22,7 @@ public class UserToRegisterDTOValidatorTests
     {
         var userToRegisterDTO = new UserToRegisterDTO
         {
-            Username = username,
+            UserName = username,
             Password = password,
             Name = "",
             Surname = ""
@@ -37,7 +37,7 @@ public class UserToRegisterDTOValidatorTests
     {
         var userToRegisterDTO = new UserToRegisterDTO
         {
-            Username = "username",
+            UserName = "username",
             Password = "password",
             Name = "",
             Surname = ""
